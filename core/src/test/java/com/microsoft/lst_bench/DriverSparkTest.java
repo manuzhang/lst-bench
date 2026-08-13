@@ -24,6 +24,9 @@ import com.microsoft.lst_bench.input.config.TelemetryConfig;
 import com.microsoft.lst_bench.util.FileParser;
 import java.io.File;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +39,10 @@ import org.junit.jupiter.api.io.TempDir;
 /** Unit test for LST-Bench driver running on Spark. */
 @EnabledIfSystemProperty(named = "lst-bench.test.db", matches = "spark")
 public class DriverSparkTest {
+
+  private static final String SPARK_JDBC_URL = "jdbc:hive2://127.0.0.1:10000";
+  private static final String SPARK_JDBC_USERNAME = "admin";
+  private static final String SPARK_JDBC_PASSWORD = "p@ssw0rd0";
 
   @Test
   @EnabledIfSystemProperty(named = "lst-bench.test.lst", matches = "delta")
@@ -231,7 +238,20 @@ public class DriverSparkTest {
 
   private void runDriver(String arg0, String arg1, String arg2, String arg3, String arg4)
       throws Exception {
+    if ("iceberg".equals(System.getProperty("lst-bench.test.lst"))) {
+      resetIcebergCatalog();
+    }
+
     Driver.main(new String[] {"-c", arg0, "-e", arg1, "-t", arg2, "-l", arg3, "-w", arg4});
+  }
+
+  private void resetIcebergCatalog() throws Exception {
+    try (Connection connection =
+            DriverManager.getConnection(SPARK_JDBC_URL, SPARK_JDBC_USERNAME, SPARK_JDBC_PASSWORD);
+        Statement statement = connection.createStatement()) {
+      statement.execute("DROP SCHEMA IF EXISTS spark_catalog.w_all_iceberg_sf_001 CASCADE");
+      statement.execute("DROP SCHEMA IF EXISTS spark_catalog.external_sf_001 CASCADE");
+    }
   }
 
   @Test
