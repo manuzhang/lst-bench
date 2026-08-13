@@ -20,10 +20,10 @@ limitations under the License.
 This folder contains configurations for running LST-Bench on various systems as depicted in the [LST-Bench dashboard](/core/metrics/app), along with details about the setups used to generate those results.
 
 ## Systems Included
-- [x] Apache Spark 3.3.1
-  - [x] Delta Lake 2.2.0
-  - [x] Apache Hudi 0.12.2
-  - [x] Apache Iceberg 1.1.0
+- [x] Apache Spark 3.5.9
+  - [x] Delta Lake 3.3.3
+  - [x] Apache Hudi 1.2.0
+  - [x] Apache Iceberg 1.11.0
 - [x] Trino 420
   - [x] Delta Lake
   - [x] Apache Iceberg
