@@ -213,8 +213,8 @@ stages:
             - download: none
             - bash: |
                 cd ~/spark
-                ./${{ lst.table_format }}.sh
-                ./dist-exec.sh spark ${{ lst.table_format }}.sh
+                ./${{ lst.table_format }}.sh "${{ lst.version }}"
+                ./dist-exec.sh spark ${{ lst.table_format }}.sh "${{ lst.version }}"
   - ${{ each workload in parameters.workloads }}:
     - ${{ if or(ne(lst.table_format, 'hudi'),ne(workload, 'wp4_time_travel')) }}:
       - stage: test_${{ lst.mode }}_${{ lst.table_format }}_${{ workload }}
@@ -258,6 +258,7 @@ stages:
                     cd ~/lst-bench-0.1-SNAPSHOT
                     echo "${{ workload }}"
                     export EXP_NAME="${{ workload }}"
+                    export TABLE_FORMAT_VERSION="${{ lst.version }}"
                     ./launcher.sh -c run/spark/azure-pipelines/config/connections_config.yaml \
                                   -e run/spark/azure-pipelines/config/experiment_config-${{ lst.mode }}-${{ lst.table_format }}.yaml \
                                   -t run/spark/azure-pipelines/config/telemetry_config.yaml \

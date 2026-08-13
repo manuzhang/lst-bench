@@ -8,7 +8,7 @@ metadata:
   system: spark
   system_version: 3.5.9
   table_format: hudi
-  table_format_version: 1.2.0
+  table_format_version: "${TABLE_FORMAT_VERSION}"
   scale_factor: "${EXP_SCALE_FACTOR}"
   mode: cow
   machine: "${EXP_MACHINE}"
