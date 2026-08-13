@@ -21,7 +21,7 @@ on:
     branches: [ main ]
 
 env:
-  JAVA_VERSION: 11
+  JAVA_VERSION: 17
 
 jobs:
   build:
@@ -84,7 +84,7 @@ jobs:
           cache: maven
       - name: Start Spark container
         run: |
-          CONTAINER_ID=$(docker run -d -p 10000:10000 -p 15002:15002 apache/spark:3.5.9-scala2.12-java11-python3-r-ubuntu tail -f /dev/null)
+          CONTAINER_ID=$(docker run -d -p 10000:10000 -p 15002:15002 apache/spark:3.5.9-scala2.12-java17-python3-r-ubuntu tail -f /dev/null)
           echo "SPARK_CONTAINER_ID=$CONTAINER_ID" >> $GITHUB_ENV
       - name: Read properties for setup
         id: yaml-data

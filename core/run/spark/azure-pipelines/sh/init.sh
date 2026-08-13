@@ -12,7 +12,7 @@ fi
 export SPARK_MASTER_HOST=$1
 export SPARK_HOME=/home/$USER/spark
 export HADOOP_HOME=/home/$USER/hadoop
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export DATA_STORAGE_ACCOUNT=$2
 export DATA_STORAGE_ACCOUNT_SHARED_KEY=$3
 
@@ -21,7 +21,7 @@ SPARK_PACKAGE=spark-$SPARK_VERSION-bin-hadoop3
 
 # Update dependencies and install packages
 sudo apt update -y
-sudo apt install -y openjdk-8-jdk wget
+sudo apt install -y openjdk-17-jdk wget
 
 # Install Hadoop
 rm -rf hadoop-3.3.1
