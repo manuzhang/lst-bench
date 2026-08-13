@@ -19,6 +19,8 @@ limitations under the License.
 # LST-Bench: Configurations and Results
 This folder contains configurations for running LST-Bench on various systems as depicted in the [LST-Bench dashboard](/core/metrics/app), along with details about the setups used to generate those results.
 
+Engine directories and table-format configuration filenames intentionally omit version numbers so dependency upgrades do not require relocating benchmark assets. The versions currently used by each engine are listed below.
+
 ## Systems Included
 - [x] Apache Spark 3.5.9
   - [x] Delta Lake 3.3.3

@@ -16,6 +16,9 @@ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export DATA_STORAGE_ACCOUNT=$2
 export DATA_STORAGE_ACCOUNT_SHARED_KEY=$3
 
+SPARK_VERSION=3.5.9
+SPARK_PACKAGE=spark-$SPARK_VERSION-bin-hadoop3
+
 # Update dependencies and install packages
 sudo apt update -y
 sudo apt install -y openjdk-8-jdk wget
@@ -27,10 +30,10 @@ tar -xzf hadoop-3.3.1.tar.gz
 ln -sf $(pwd)/hadoop-3.3.1 $HADOOP_HOME
 
 # Install Spark
-rm -rf spark-3.5.9-bin-hadoop3
-wget -nv -N https://archive.apache.org/dist/spark/spark-3.5.9/spark-3.5.9-bin-hadoop3.tgz
-tar -xf spark-3.5.9-bin-hadoop3.tgz
-ln -sf $(pwd)/spark-3.5.9-bin-hadoop3 $SPARK_HOME
+rm -rf $SPARK_PACKAGE
+wget -nv -N https://archive.apache.org/dist/spark/spark-$SPARK_VERSION/$SPARK_PACKAGE.tgz
+tar -xf $SPARK_PACKAGE.tgz
+ln -sf $(pwd)/$SPARK_PACKAGE $SPARK_HOME
 
 # Configure Spark
 sudo mkdir -p /opt/spark-events

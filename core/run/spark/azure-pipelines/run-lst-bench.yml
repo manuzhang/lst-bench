@@ -106,15 +106,15 @@ stages:
           steps:
           - bash: |
               echo 'Deploy engine'
-              mkdir -p ~/spark-3.5.9
-              cp $(Pipeline.Workspace)/lst-bench-0.1-SNAPSHOT/run/spark-3.5.9/azure-pipelines/sh/* ~/spark-3.5.9/
-              cd ~/spark-3.5.9
+              mkdir -p ~/spark
+              cp $(Pipeline.Workspace)/lst-bench-0.1-SNAPSHOT/run/spark/azure-pipelines/sh/* ~/spark/
+              cd ~/spark
               chmod +x ./*
               spark_head_node=$(ip addr show eth0 | sed -n 's/ *inet [^0-9]*\([0-9\.]\+\).*/\1/p')
               ./init.sh "${spark_head_node}" "$(data_storage_account)" "$(data_storage_account_shared_key)"
               ./hms.sh "$(hms_jdbc_driver)" "$(hms_jdbc_url)" "$(hms_jdbc_user)" "$(hms_jdbc_password)" "$(hms_storage_account)" "$(hms_storage_account_shared_key)" "$(hms_storage_account_container)"
               ./dist-setup.sh
-              ./dist-exec.sh spark-3.5.9 init.sh "${spark_head_node}" "$(data_storage_account)" "$(data_storage_account_shared_key)"
+              ./dist-exec.sh spark init.sh "${spark_head_node}" "$(data_storage_account)" "$(data_storage_account_shared_key)"
   - deployment: ClientDeploy
     displayName: 'Deploying LST-Bench client'
     workspace:
@@ -151,7 +151,7 @@ stages:
           steps:
           - download: none
           - bash: |
-              cd ~/spark-3.5.9
+              cd ~/spark
               ./stop-cluster.sh && ./start-cluster.sh
               sleep 10
               spark_head_node=$(ip addr show eth0 | sed -n 's/ *inet [^0-9]*\([0-9\.]\+\).*/\1/p')
@@ -174,11 +174,11 @@ stages:
           - download: none
           - bash: |
               cd ~/lst-bench-0.1-SNAPSHOT
-              ./launcher.sh -c run/spark-3.5.9/azure-pipelines/config/connections_config.yaml \
-                            -e run/spark-3.5.9/azure-pipelines/config/setup_experiment_config.yaml \
-                            -t run/spark-3.5.9/azure-pipelines/config/telemetry_config.yaml \
-                            -l run/spark-3.5.9/config/tpcds/library.yaml \
-                            -w run/spark-3.5.9/config/tpcds/setup_experiment.yaml
+              ./launcher.sh -c run/spark/azure-pipelines/config/connections_config.yaml \
+                            -e run/spark/azure-pipelines/config/setup_experiment_config.yaml \
+                            -t run/spark/azure-pipelines/config/telemetry_config.yaml \
+                            -l run/spark/config/tpcds/library.yaml \
+                            -w run/spark/config/tpcds/setup_experiment.yaml
   - deployment: StopEngine
     dependsOn: RunSetupExperiment
     displayName: "Stopping Engine"
@@ -192,7 +192,7 @@ stages:
           steps:
           - download: none
           - bash: |
-              cd ~/spark-3.5.9
+              cd ~/spark
               ./stop-cluster.sh
 
 # Run LST-Bench
@@ -212,9 +212,9 @@ stages:
             steps:
             - download: none
             - bash: |
-                cd ~/spark-3.5.9
-                ./${{ lst.table_format }}-${{ lst.version }}.sh
-                ./dist-exec.sh spark-3.5.9 ${{ lst.table_format }}-${{ lst.version }}.sh
+                cd ~/spark
+                ./${{ lst.table_format }}.sh
+                ./dist-exec.sh spark ${{ lst.table_format }}.sh
   - ${{ each workload in parameters.workloads }}:
     - ${{ if or(ne(lst.table_format, 'hudi'),ne(workload, 'wp4_time_travel')) }}:
       - stage: test_${{ lst.mode }}_${{ lst.table_format }}_${{ workload }}
@@ -233,7 +233,7 @@ stages:
                 steps:
                 - download: none
                 - bash: |
-                    cd ~/spark-3.5.9
+                    cd ~/spark
                     ./stop-cluster.sh && ./start-cluster.sh ${{ lst.table_format }}
                     sleep 10
                     spark_head_node=$(ip addr show eth0 | sed -n 's/ *inet [^0-9]*\([0-9\.]\+\).*/\1/p')
@@ -258,11 +258,11 @@ stages:
                     cd ~/lst-bench-0.1-SNAPSHOT
                     echo "${{ workload }}"
                     export EXP_NAME="${{ workload }}"
-                    ./launcher.sh -c run/spark-3.5.9/azure-pipelines/config/connections_config.yaml \
-                                  -e run/spark-3.5.9/azure-pipelines/config/experiment_config-${{ lst.mode }}-${{ lst.table_format }}-${{ lst.version }}.yaml \
-                                  -t run/spark-3.5.9/azure-pipelines/config/telemetry_config.yaml \
-                                  -l run/spark-3.5.9/config/tpcds/library.yaml \
-                                  -w run/spark-3.5.9/config/tpcds/${{ workload }}-${{ lst.table_format }}-${{ lst.version }}.yaml
+                    ./launcher.sh -c run/spark/azure-pipelines/config/connections_config.yaml \
+                                  -e run/spark/azure-pipelines/config/experiment_config-${{ lst.mode }}-${{ lst.table_format }}.yaml \
+                                  -t run/spark/azure-pipelines/config/telemetry_config.yaml \
+                                  -l run/spark/config/tpcds/library.yaml \
+                                  -w run/spark/config/tpcds/${{ workload }}-${{ lst.table_format }}.yaml
         - deployment: StopEngine
           dependsOn: RunExperiment
           displayName: "Stopping Engine (${{ lst.mode }}, ${{ lst.table_format }}-${{ lst.version }}, ${{ workload }})"
@@ -276,7 +276,7 @@ stages:
                 steps:
                 - download: none
                 - bash: |
-                    cd ~/spark-3.5.9
+                    cd ~/spark
                     ./stop-cluster.sh
   - stage: cleanup_${{ lst.mode }}_${{ lst.table_format }}
     jobs:
@@ -292,6 +292,6 @@ stages:
             steps:
             - download: none
             - bash: |
-                cd ~/spark-3.5.9
-                ./cleanup-${{ lst.table_format }}-${{ lst.version }}.sh
-                ./dist-exec.sh spark-3.5.9 cleanup-${{ lst.table_format }}-${{ lst.version }}.sh
+                cd ~/spark
+                ./cleanup-${{ lst.table_format }}.sh
+                ./dist-exec.sh spark cleanup-${{ lst.table_format }}.sh
