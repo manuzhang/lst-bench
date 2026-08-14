@@ -20,8 +20,7 @@ limitations under the License.
 
 **Dashboard:** [https://lst-bench.azurewebsites.net/](https://lst-bench.azurewebsites.net/)
 
-The LST-Bench dashboard is powered by [Streamlit](https://github.com/streamlit/streamlit) and deployed to Azure App Service through GitHub actions. 
-You can find the deployment workflow [here](/.github/workflows/webapp-deploy.yaml). 
+The LST-Bench dashboard is powered by [Streamlit](https://github.com/streamlit/streamlit).
 The dashboard provides insights derived from metrics collected from LST-Bench, including execution time and degradation rate. 
 
 ## Evaluation
