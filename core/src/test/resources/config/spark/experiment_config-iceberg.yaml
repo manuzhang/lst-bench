@@ -23,7 +23,7 @@ parameter_values:
   catalog: iceberg
   database: w_all_iceberg_sf_001
   table_format: iceberg
-  data_path: '/iceberg/sf_001/'
+  data_path: '/tmp/lst-bench-iceberg-warehouse/sf_001/'
   options_suffix: ''
   tblproperties_suffix: ', "format-version"="2", "write.delete.mode"="copy-on-write", "write.update.mode"="copy-on-write", "write.merge.mode"="copy-on-write"'
   scale_factor: 0.01

@@ -9,7 +9,7 @@ docker exec -i -u root $SPARK_CONTAINER_ID /bin/bash -c '/bin/bash -s' <<EOF
   mkdir /opt/spark/conf
   echo "spark.serializer org.apache.spark.serializer.KryoSerializer" >> /opt/spark/conf/spark-defaults.conf
   mkdir /opt/spark/logs
-  mkdir /warehouse
+  mkdir -p /tmp/lst-bench-iceberg-warehouse
   apt-get -y install wget
   # Install Delta Lake
   wget -q https://repo1.maven.org/maven2/io/delta/delta-spark_2.12/3.3.3/delta-spark_2.12-3.3.3.jar -P /opt/spark/jars/
