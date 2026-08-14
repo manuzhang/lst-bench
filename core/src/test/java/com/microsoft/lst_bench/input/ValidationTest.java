@@ -138,9 +138,9 @@ public class ValidationTest {
   @EnabledOnOs({OS.LINUX, OS.MAC})
   @ValueSource(
       strings = {
-        "run/spark-3.3.1/config/tpcds/library.yaml",
+        "run/spark/config/tpcds/library.yaml",
         "run/trino-420/config/tpcds/library.yaml",
-        "run/spark-3.3.1/config/tpch/library.yaml"
+        "run/spark/config/tpch/library.yaml"
       })
   public void testValidationLibraryUnix(String libraryPath) throws IOException {
     testValidationLibrary(libraryPath);
@@ -150,9 +150,9 @@ public class ValidationTest {
   @EnabledOnOs({OS.WINDOWS})
   @ValueSource(
       strings = {
-        "run\\spark-3.3.1\\config\\tpcds\\library.yaml",
+        "run\\spark\\config\\tpcds\\library.yaml",
         "run\\trino-420\\config\\tpcds\\library.yaml",
-        "run\\spark-3.3.1\\config\\tpch\\library.yaml"
+        "run\\spark\\config\\tpch\\library.yaml"
       })
   public void testValidationLibraryWin(String libraryPath) throws IOException {
     testValidationLibrary(libraryPath);
@@ -173,21 +173,21 @@ public class ValidationTest {
   @EnabledOnOs({OS.LINUX, OS.MAC})
   @ValueSource(
       strings = {
-        "run/spark-3.3.1/config/tpcds/w0_tpcds-delta-2.2.0.yaml",
-        "run/spark-3.3.1/config/tpcds/w0_tpcds-hudi-0.12.2.yaml",
-        "run/spark-3.3.1/config/tpcds/w0_tpcds-iceberg-1.1.0.yaml",
-        "run/spark-3.3.1/config/tpcds/wp1_longevity-delta-2.2.0.yaml",
-        "run/spark-3.3.1/config/tpcds/wp2_resilience-delta-2.2.0.yaml",
-        "run/spark-3.3.1/config/tpcds/wp3_rw_concurrency-delta-2.2.0.yaml",
-        "run/spark-3.3.1/config/tpcds/wp3_rw_concurrency_multi-delta-2.2.0.yaml",
-        "run/spark-3.3.1/config/tpcds/wp4_time_travel-delta-2.2.0.yaml",
+        "run/spark/config/tpcds/w0_tpcds-delta.yaml",
+        "run/spark/config/tpcds/w0_tpcds-hudi.yaml",
+        "run/spark/config/tpcds/w0_tpcds-iceberg.yaml",
+        "run/spark/config/tpcds/wp1_longevity-delta.yaml",
+        "run/spark/config/tpcds/wp2_resilience-delta.yaml",
+        "run/spark/config/tpcds/wp3_rw_concurrency-delta.yaml",
+        "run/spark/config/tpcds/wp3_rw_concurrency_multi-delta.yaml",
+        "run/spark/config/tpcds/wp4_time_travel-delta.yaml",
         "run/trino-420/config/tpcds/w0_tpcds.yaml",
         "run/trino-420/config/tpcds/wp1_longevity.yaml",
         "run/trino-420/config/tpcds/wp2_resilience.yaml",
         "run/trino-420/config/tpcds/wp3_rw_concurrency.yaml",
-        "run/spark-3.3.1/config/tpch/w0_tpch-delta.yaml",
-        "run/spark-3.3.1/config/tpch/w0_tpch-hudi.yaml",
-        "run/spark-3.3.1/config/tpch/w0_tpch-iceberg.yaml"
+        "run/spark/config/tpch/w0_tpch-delta.yaml",
+        "run/spark/config/tpch/w0_tpch-hudi.yaml",
+        "run/spark/config/tpch/w0_tpch-iceberg.yaml"
       })
   public void testValidationWorkloadUnix(String workloadFilePath) throws IOException {
     testValidationWorkload(workloadFilePath);
@@ -197,21 +197,21 @@ public class ValidationTest {
   @EnabledOnOs({OS.WINDOWS})
   @ValueSource(
       strings = {
-        "run\\spark-3.3.1\\config\\tpcds\\w0_tpcds-delta-2.2.0.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\w0_tpcds-hudi-0.12.2.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\w0_tpcds-iceberg-1.1.0.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\wp1_longevity-delta-2.2.0.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\wp2_resilience-delta-2.2.0.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\wp3_rw_concurrency-delta-2.2.0.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\wp3_rw_concurrency_multi-delta-2.2.0.yaml",
-        "run\\spark-3.3.1\\config\\tpcds\\wp4_time_travel-delta-2.2.0.yaml",
+        "run\\spark\\config\\tpcds\\w0_tpcds-delta.yaml",
+        "run\\spark\\config\\tpcds\\w0_tpcds-hudi.yaml",
+        "run\\spark\\config\\tpcds\\w0_tpcds-iceberg.yaml",
+        "run\\spark\\config\\tpcds\\wp1_longevity-delta.yaml",
+        "run\\spark\\config\\tpcds\\wp2_resilience-delta.yaml",
+        "run\\spark\\config\\tpcds\\wp3_rw_concurrency-delta.yaml",
+        "run\\spark\\config\\tpcds\\wp3_rw_concurrency_multi-delta.yaml",
+        "run\\spark\\config\\tpcds\\wp4_time_travel-delta.yaml",
         "run\\trino-420\\config\\tpcds\\w0_tpcds.yaml",
         "run\\trino-420\\config\\tpcds\\wp1_longevity.yaml",
         "run\\trino-420\\config\\tpcds\\wp2_resilience.yaml",
         "run\\trino-420\\config\\tpcds\\wp3_rw_concurrency.yaml",
-        "run\\spark-3.3.1\\config\\tpch\\w0_tpch-delta.yaml",
-        "run\\spark-3.3.1\\config\\tpch\\w0_tpch-hudi.yaml",
-        "run\\spark-3.3.1\\config\\tpch\\w0_tpch-iceberg.yaml"
+        "run\\spark\\config\\tpch\\w0_tpch-delta.yaml",
+        "run\\spark\\config\\tpch\\w0_tpch-hudi.yaml",
+        "run\\spark\\config\\tpch\\w0_tpch-iceberg.yaml"
       })
   public void testValidationWorkloadWin(String workloadFilePath) throws IOException {
     testValidationWorkload(workloadFilePath);
